@@ -9,9 +9,10 @@
 
 const int iXmax = 800;
 const int iYmax = 800;
-const uint32_t rawImg = iXmax * iYmax *3;
 const char *ssid = "ssid";
 const char *passwd = "password";
+const char *filename = "/mandelbrot.png";
+const uint32_t rawImg = iXmax * iYmax *3;
 
 #include <miniz.h>
 #include <SPIFFS.h>
@@ -172,14 +173,15 @@ void setup() {
       Serial.println("Not enough memory to build the image");
       return;
     }
-    uint32_t file_size = writePng("/mandelbrot.png");
+    String pxFilename = "/spiffs" + String(filename);
+    uint32_t file_size = writePng(pxFilename.c_str());
     Serial.printf("Compressed %u byte image to %u bytes\n", rawImg, file_size);
     WiFi.begin(ssid,passwd);
     WiFi.waitForConnectResult();
-    Serial.println("IP");
+    Serial.print("http://");
     Serial.println(WiFi.localIP());
     server.begin();
-    server.serveStatic("/", SPIFFS, "/mandelbrot.png");
+    server.serveStatic("/", SPIFFS, filename);
     server.onNotFound([](){server.send(404, "text/plain", "404 - File not found");});
 }
     

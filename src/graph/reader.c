@@ -94,7 +94,7 @@
    plotter.c) to plot each point as it is read. */
 
 #include "sys-defines.h"
-#include "libcommon.h"
+#include "plotutils.h"
 #include "extern.h"
 
 /* New (larger) length of a Point array, as function of the old; used when

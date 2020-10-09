@@ -3,9 +3,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
+const char *ssid = "ssid";
+const char *passwd = "passwd";
 const char* filename = "/animated.png";
-const char *ssid = "larryb";
-const char *passwd = "clownfish";
 
 WebServer server;
 
@@ -41,7 +41,8 @@ void setup() {
     server.begin();
     server.serveStatic("/", SPIFFS, filename);
     server.onNotFound([](){server.send(404, "text/plain", "404 - File not found");});
-    Serial.printf("http://%s/%s", WiFi.localIP().toString(), filename);
+    Serial.print("http://");
+    Serial.println(WiFi.localIP());
 }
     
 void loop() {

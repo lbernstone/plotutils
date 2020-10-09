@@ -111,7 +111,7 @@
    real-time display. */
 
 #include "sys-defines.h"
-#include "libcommon.h"
+#include "plotutils.h"
 #include "plot.h"
 #include "extern.h"
 
