@@ -3,8 +3,8 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char *ssid = "larryb";
-const char *passwd = "clownfish";
+const char *ssid = "myssid";
+const char *passwd = "password";
 const char* filename = "/graph.gif";
 
 WebServer server;
