@@ -1531,17 +1531,18 @@ int graph (int argc, char *argv[])
   
   /* finish up by deleting our multigrapher (one must have been created,
      since we always read at least stdin) */
+  if (delete_multigrapher (multigrapher) < 0)
+    {
+      fprintf (stderr, "%s: error: the graphing device could not be closed\n", 
+	       progname);
+      if (out_file) fclose(out_file);
+      return EXIT_FAILURE;
+    }
   if (out_file) {
 	  fseek(out_file, 0L, SEEK_END);
 	  log_v("file size: %ul", ftell(out_file));
 	  fclose(out_file);
   }
-  if (delete_multigrapher (multigrapher) < 0)
-    {
-      fprintf (stderr, "%s: error: the graphing device could not be closed\n", 
-	       progname);
-      return EXIT_FAILURE;
-    }
   
   return EXIT_SUCCESS;
 }

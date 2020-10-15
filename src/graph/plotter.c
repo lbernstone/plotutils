@@ -742,7 +742,7 @@ new_multigrapher (const char *output_format, const char *bg_color, const char *b
 
   /* create Plotter and open it */
   if (out_file) {
-      plotter = pl_newpl_r (output_format, NULL, tfile, stderr, plotter_params);
+      plotter = pl_newpl_r (output_format, NULL, out_file, stderr, plotter_params);
   } else {
       plotter = pl_newpl_r (output_format, NULL, stdout, stderr, plotter_params);
   }
