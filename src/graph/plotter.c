@@ -722,7 +722,7 @@ prepare_axis (Axis *axisp, Transform *trans, double min, double max, double spac
    line. */
 
 Multigrapher *
-new_multigrapher (const char *output_format, const char *bg_color, const char *bitmap_size, const char *emulate_color, const char *max_line_length, const char *meta_portable, const char *page_size, const char *rotation_angle, bool save_screen)
+new_multigrapher (const char *output_format, const char *bg_color, const char *bitmap_size, const char *emulate_color, const char *max_line_length, const char *meta_portable, const char *page_size, const char *rotation_angle, bool save_screen, FILE* out_file)
 {
   plPlotterParams *plotter_params;
   plPlotter *plotter;
@@ -741,7 +741,11 @@ new_multigrapher (const char *output_format, const char *bg_color, const char *b
   pl_setplparam (plotter_params, "ROTATION", (void *)rotation_angle);
 
   /* create Plotter and open it */
-  plotter = pl_newpl_r (output_format, NULL, stdout, stderr, plotter_params);
+  if (out_file) {
+      plotter = pl_newpl_r (output_format, NULL, tfile, stderr, plotter_params);
+  } else {
+      plotter = pl_newpl_r (output_format, NULL, stdout, stderr, plotter_params);
+  }
   if (plotter == (plPlotter *)NULL)
     return (Multigrapher *)NULL;
   pl_deleteplparams (plotter_params);

@@ -26,11 +26,11 @@
 #include "fontlist.h"
 #include "plot.h"
 
-const char *progname = "plotfont"; /* name of this program */
-const char *written = "Written by Robert S. Maier.";
-const char *copyright = "Copyright (C) 2009 Free Software Foundation, Inc.";
+const char *pf_progname = "plotfont"; /* name of this program */
+const char *pf_written = "Written by Robert S. Maier.";
+const char *pf_copyright = "Copyright (C) 2009 Free Software Foundation, Inc.";
 
-const char *usage_appendage = " FONT...\n";
+const char *pf_usage_appendage = " FONT...\n";
 
 enum radix { DECIMAL, OCTAL, HEXADECIMAL };
 
@@ -40,9 +40,9 @@ enum radix { DECIMAL, OCTAL, HEXADECIMAL };
 #define	ARG_REQUIRED	1
 #define	ARG_OPTIONAL	2
 
-const char *optstring = "12oxOf:j:J:F:T:";
+const char *pf_optstring = "12oxOf:j:J:F:T:";
 
-struct option long_options[] = 
+struct option pf_long_options[] = 
 {
   /* The most important option ("--display-type" is an obsolete variant) */
   { "output-format",	ARG_REQUIRED,	NULL, 'T'},
@@ -78,7 +78,7 @@ struct option long_options[] =
     
 /* null-terminated list of options, such as obsolete-but-still-maintained
    options or undocumented options, which we don't show to the user */
-const int hidden_options[] = { (int)'J', (int)'F', (int)('T' << 8), 0 };
+const int pf_hidden_options[] = { (int)'J', (int)'F', (int)('T' << 8), 0 };
 
 /* forward references */
 bool do_font (plPlotter *plotter, const char *name, bool upper_half, char *pen_color_name, char *numbering_font_name, char *title_font_name, bool bearings, enum radix base, int jis_page, bool do_jis_page);
@@ -111,10 +111,10 @@ int plotfont (int argc, char *argv[])
   int retval;			/* return value */
 
   plotter_params = pl_newplparams ();
-  while ((option = getopt_long (argc, argv, optstring, long_options, &opt_index)) != EOF)
+  while ((option = getopt_long (argc, argv, pf_optstring, pf_long_options, &opt_index)) != EOF)
     {
       if (option == 0)
-	option = long_options[opt_index].val;
+	option = pf_long_options[opt_index].val;
       
       switch (option) 
 	{
@@ -189,7 +189,7 @@ int plotfont (int argc, char *argv[])
 	    {
 	      fprintf (stderr,
 		       "%s: the JIS page number is bad (it should be in the range 33..126)\n",
-		       progname);
+		       pf_progname);
 	      errcnt++;
 	    }
 	  else
@@ -201,7 +201,7 @@ int plotfont (int argc, char *argv[])
 	    {
 	      fprintf (stderr,
 		       "%s: the JIS row number is bad (it should be in the range 1..94)\n",
-		       progname);
+		       pf_progname);
 	      errcnt++;
 	    }
 	  else
@@ -222,19 +222,19 @@ int plotfont (int argc, char *argv[])
 
   if (errcnt > 0)
     {
-      fprintf (stderr, "Try `%s --help' for more information\n", progname);
+      fprintf (stderr, "Try `%s --help' for more information\n", pf_progname);
       return EXIT_FAILURE;
     }
   if (show_version)
     {
-      display_version (progname, written, copyright);
+      display_version (pf_progname, pf_written, pf_copyright);
       return EXIT_SUCCESS;
     }
   if (do_list_fonts)
     {
       int success;
 
-      success = list_fonts (output_format, progname);
+      success = list_fonts (output_format, pf_progname);
       if (success)
 	return EXIT_SUCCESS;
       else
@@ -244,7 +244,7 @@ int plotfont (int argc, char *argv[])
     {
       int success;
 
-      success = display_fonts (output_format, progname);
+      success = display_fonts (output_format, pf_progname);
       if (success)
 	return EXIT_SUCCESS;
       else
@@ -252,13 +252,13 @@ int plotfont (int argc, char *argv[])
     }
   if (show_usage)
     {
-      display_usage (progname, hidden_options, usage_appendage, 2);
+      display_usage (pf_progname, pf_hidden_options, pf_usage_appendage, 2);
       return EXIT_SUCCESS;
     }
 
   if (option_font_name == NULL && optind >= argc)
     {
-      fprintf (stderr, "%s: no font or fonts are specified\n", progname);
+      fprintf (stderr, "%s: no font or fonts are specified\n", pf_progname);
       return EXIT_FAILURE;
     }
 
@@ -269,7 +269,7 @@ int plotfont (int argc, char *argv[])
 	  || (option_font_name && strcasecmp (option_font_name, "HersheyEUC") != 0)
 	  || (!option_font_name && strcasecmp (argv[optind], "HersheyEUC") != 0))
 	{
-	  fprintf (stderr, "%s: a JIS page can only be specified for the HersheyEUC font\n", progname);
+	  fprintf (stderr, "%s: a JIS page can only be specified for the HersheyEUC font\n", pf_progname);
 	  return EXIT_FAILURE;
 	}	  
     }
@@ -279,7 +279,7 @@ int plotfont (int argc, char *argv[])
     if ((plotter = pl_newpl_r (output_format, NULL, plFile, stderr, 
 			     plotter_params)) == NULL)
       {
-        fprintf (stderr, "%s: error: the plot device could not be created\n", progname);
+        fprintf (stderr, "%s: error: the plot device could not be created\n", pf_progname);
         fclose(plFile);
         return EXIT_FAILURE;
       }
@@ -287,7 +287,7 @@ int plotfont (int argc, char *argv[])
     if ((plotter = pl_newpl_r (output_format, NULL, stdout, stderr, 
 			     plotter_params)) == NULL)
       {
-        fprintf (stderr, "%s: error: the plot device could not be created\n", progname);
+        fprintf (stderr, "%s: error: the plot device could not be created\n", pf_progname);
         fclose(plFile);
         return EXIT_FAILURE;
       }
@@ -317,7 +317,7 @@ int plotfont (int argc, char *argv[])
   retval = EXIT_SUCCESS;
   if (pl_deletepl_r (plotter) < 0)
     {
-      fprintf (stderr, "%s: error: the plot device could not be deleted\n", progname);
+      fprintf (stderr, "%s: error: the plot device could not be deleted\n", pf_progname);
       retval = EXIT_FAILURE;
     }
   if (filename) {
@@ -390,7 +390,7 @@ do_font (plPlotter *plotter, const char *name, bool upper_half, char *pen_color_
 
   if (pl_openpl_r (plotter) < 0)
     {
-      fprintf (stderr, "%s: error: the plot device could not be opened\n", progname);
+      fprintf (stderr, "%s: error: the plot device could not be opened\n", pf_progname);
       return false;
     }
 
@@ -566,7 +566,7 @@ do_font (plPlotter *plotter, const char *name, bool upper_half, char *pen_color_
   
   if (pl_closepl_r (plotter) < 0)
     {
-      fprintf (stderr, "%s: error: the plot device could not be closed\n", progname);
+      fprintf (stderr, "%s: error: the plot device could not be closed\n", pf_progname);
       return false;
     }
   return true;

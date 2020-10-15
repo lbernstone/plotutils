@@ -78,7 +78,7 @@ extern const char *colorstyle[NO_OF_LINEMODES];
 
 typedef struct MultigrapherStruct Multigrapher;
 
-extern Multigrapher * new_multigrapher (const char *output_format, const char *bg_color, const char *bitmap_size, const char *emulate_color, const char *max_line_length, const char *meta_portable, const char *page_size, const char *rotation_angle, bool save_screen);
+extern Multigrapher * new_multigrapher (const char *output_format, const char *bg_color, const char *bitmap_size, const char *emulate_color, const char *max_line_length, const char *meta_portable, const char *page_size, const char *rotation_angle, bool save_screen, FILE* out_file);
 
 extern int delete_multigrapher (Multigrapher *multigrapher);
 
