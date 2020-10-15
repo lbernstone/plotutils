@@ -25,7 +25,7 @@ void setup() {
     WiFi.begin(ssid,passwd);
     WiFi.waitForConnectResult();
     server.begin();
-    server.serveStatic("/graph.gif", SPIFFS, "/graph.gif");
+    server.serveStatic("/", SPIFFS, "/graph.gif");
     server.onNotFound([](){server.send(404, "text/plain", "404 - File not found");});
     Serial.print("http://");
     Serial.println(WiFi.localIP());
