@@ -15,7 +15,7 @@ void writePng(const char* plFilename) {
   plPlotterParams *plotter_params;
   plotter_params = pl_newplparams();
   pl_setplparam(plotter_params, "BITMAPSIZE", (void*)"320x240");
-  plotter = pl_newpl_r ("gif", stdin, plFile, stderr, plotter_params);
+  plotter = pl_newpl_r ("png", stdin, plFile, stderr, plotter_params);
   pl_openpl_r (plotter);
   pl_fspace_r (plotter, -0.5, -0.5, 149.5, 99.5);
   pl_pencolorname_r (plotter, "red");

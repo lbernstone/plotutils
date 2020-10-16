@@ -164,13 +164,11 @@ _pl_z_maybe_output_image (S___(Plotter *_plotter))
     }
 
   /* cleanup after libpng errors (error handler does a longjmp) */
-/* LSB-TODO: fix setjmp
-  if (setjmp (png_ptr->jmpbuf))
+  if (setjmp (png_jmpbuf(png_ptr)))
     {
       png_destroy_write_struct (&png_ptr, (png_info **)NULL);
       return -1;
     }
-*/  
 #ifdef LIBPLOTTER
   if (stream)
     {
@@ -445,8 +443,7 @@ _our_error_fn_stdio (png_struct *png_ptr, const char *data)
 #endif
     }
 
-// LSB-TODO: fix longjmp
-//  longjmp (png_ptr->jmpbuf, 1);
+  longjmp (png_jmpbuf(png_ptr), 1);
 }
 
 static void 
