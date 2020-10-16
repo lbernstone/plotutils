@@ -1,6 +1,6 @@
 # plotutils
 
-LSB: This library will use PSRAM if you have it.  Otherwise, you will probably not be able to work with images larger than ~140x140
+esp32: This library will use PSRAM if you have it.  Otherwise, you will probably not be able to work with images larger than ~140x140
 
 This is release 2.6 of the GNU plotutils (plotting utilities) package,
 including release 4.4 of GNU libplot: a thread-safe function library for
